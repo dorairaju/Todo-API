@@ -7,7 +7,7 @@ var todos = [{
 	completed: false
 }, {
 	id: 2,
-	description: 'Go to market',
+	description: 'Need to finish Node.JS videos',
 	completed: false
 }, {
 	id: 3,
