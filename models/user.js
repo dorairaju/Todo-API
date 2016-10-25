@@ -1,4 +1,4 @@
-module.exports = function (sequelize, Datatypes) {
+module.exports = function(sequelize, Datatypes) {
 	return sequelize.define('user', {
 		email: {
 			type: Datatypes.STRING,
@@ -14,6 +14,17 @@ module.exports = function (sequelize, Datatypes) {
 			allowNull: false,
 			validate: {
 				len: [7,100]
+			}
+		}
+	}, {
+		hooks: {
+			beforeValidate: function(user, options) {
+				// user.email
+				if (typeof user.email === 'string') {
+
+					user.email = user.email.toLowerCase();
+
+				}
 			}
 		}
 	});
