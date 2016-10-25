@@ -69,3 +69,5 @@ sequelize.sync({
 	// 	console.log(e);
 	// });
 });
+
+
