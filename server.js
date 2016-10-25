@@ -41,25 +41,7 @@ app.get('/todos', function(req, res) {
 		res.status(500).send();
 	});
 
-	// var filteredTodos = todos;
-
-	// if (queryParams.hasOwnProperty('completed') && queryParams.completed === 'true') {
-	// 	filteredTodos = _.where(filteredTodos, {
-	// 		completed: true
-	// 	});
-	// } else if (queryParams.hasOwnProperty('completed') && queryParams.completed === 'false') {
-	// 	filteredTodos = _.where(filteredTodos, {
-	// 		completed: false
-	// 	});
-	// }
-
-	// if (queryParams.hasOwnProperty('q') && queryParams.q.length > 0) {
-	// 	filteredTodos = _.filter(filteredTodos, function(todo) {
-	// 		return todo.description.toLowerCase().indexOf(queryParams.q.toLowerCase()) > -1;
-	// 	});
-	// }
-
-	// res.json(filteredTodos);
+	
 });
 
 // GET /todos/:id
@@ -75,16 +57,7 @@ app.get('/todos/:id', function(req, res) {
 	}, function(e) {
 		res.status(500).send();
 	});
-	// var matchedTodo = _.findWhere(todos, {
-	// 	id: todoId
-	// });
-
-
-	// if (matchedTodo) {
-	// 	res.json(matchedTodo);
-	// } else {
-	// 	res.status(404).send();
-	// }
+	
 
 });
 
@@ -99,26 +72,7 @@ app.post('/todos', function(req, res) {
 	}, function(e) {
 		res.status(400).json(e);
 	});
-	// call create on db.todo
-	// 		respond with 200 and todo
-	//		e res.status(400).json(e)
-
-
-	// if (!_.isBoolean(body.completed) || !_.isString(body.description) || body.description.trim().length === 0) {
-	// 	return res.status(400).send();
-	// }
-
-	// // set body.description to be trimmed value
-
-	// body.description = body.description.trim();
-
-	// body.id = todoNextId++;
-
-	// todos.push(body);
-
-
-	// //console.log('description: '+ body.description);
-	// res.json(body);
+	
 
 });
 
@@ -145,19 +99,7 @@ app.delete('/todos/:id', function(req, res) {
 		res.status(500).send();
 	})
 
-	// var matchedTodo = _.findWhere(todos, {
-	// 	id: todoId
-	// });
-
-
-	// if (matchedTodo) {
-	// 	todos = _.without(todos, matchedTodo);
-	// 	res.json(matchedTodo);
-	// } else {
-	// 	res.status(404).json({
-	// 		"error": "no todo found with that id."
-	// 	});
-	// }
+	
 
 });
 
@@ -165,12 +107,10 @@ app.delete('/todos/:id', function(req, res) {
 app.put('/todos/:id', function(req, res) {
 
 	var todoId = parseInt(req.params.id, 10);
-	// var matchedTodo = _.findWhere(todos, {
-	// 	id: todoId
-	// });
+	
 	var body = _.pick(req.body, 'description', 'completed');
 	var attributes = {};
-	//var validAttributes = {};
+	
 
 	if (body.hasOwnProperty('completed')) {
 		attributes.completed = body.completed;
@@ -194,26 +134,22 @@ app.put('/todos/:id', function(req, res) {
 		res.status(500).send();
 	})
 
-	// if (!matchedTodo) {
-	// 	return res.status(400).send();
-	// };
-	//below code is used for validations
-	// if (body.hasOwnProperty('completed') && _.isBoolean(body.completed)) {
-
-	// 	validAttributes.completed = body.completed;
-	// } else if (body.hasOwnProperty('completed')) {
-	// 	return res.status(400).send();
-	// };
-	// if (body.hasOwnProperty('description') && _.isString(body.description) && body.description.trim().length > 0) {
-	// 	validAttributes.description = body.description;
-	// } else if (body.hasOwnProperty('description')) {
-	// 	return res.status(400).send();
-	// }
-
-	// _.extend(matchedTodo, validAttributes);
-	// res.json(matchedTodo);
 
 });
+
+//****************** PUT webservice for User table ***************//
+app.post('/users', function(req, res) {
+
+	var body = _.pick(req.body, 'email', 'password');
+
+	db.user.create(body).then(function(user) {
+		res.json(user.toJSON())
+	}, function(e) {
+		res.status(400).json(e);
+	});
+
+});
+//****************************************************************//
 
 db.sequelize.sync().then(function() {
 
